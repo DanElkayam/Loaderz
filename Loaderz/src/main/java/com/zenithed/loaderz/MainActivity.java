@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
                     R.layout.layout_list_item,
 					null,
 					new String[] {FeedsContract.Entry.TITLE },
-					new int [] { android.R.id.text1},
+					new int [] { R.id.list_item_title},
 					CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER));
 			
 			getActivity().getLoaderManager().initLoader(0, null, new ListItemLoaderCallbacks());
