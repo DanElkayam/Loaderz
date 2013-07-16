@@ -300,5 +300,5 @@ public class FeedsProvider extends ContentProvider {
             db.endTransaction();
         }
     }
-    
+
 }

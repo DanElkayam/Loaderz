@@ -40,33 +40,33 @@ public class FeedsFechingService extends IntentService {
 		final String mimeType = intent.getType();
 		
 		if (action.equals(Intent.ACTION_SYNC)) {
-			
+
 			// performs sync for entries.
 			if (mimeType.equals(FeedsContract.Entry.CONTENT_TYPE) ||
 				mimeType.equals(FeedsContract.Entry.CONTENT_ITEM_TYPE)) {
-				
-				
+
+
 				/*
 				 * Checks for the given uri operation if we needs to sync.
 				 */
 				final Uri operationUri = FeedsContract.Operation.CONTENT_URI;
-				final String selection = FeedsContract.Operation.URI + "=? AND " 
+				final String selection = FeedsContract.Operation.URI + "=? AND "
 											+ FeedsContract.Operation.ACTION + "=? AND "
 											+ "(" + FeedsContract.Operation.TIMESTAMP + "<? OR "
 												  + FeedsContract.Operation.STATUS + "=" + FeedsContract.Operation.Status.FAIL
 											+ ")";
-				
+
 				final String [] selectionArgs = {
 						uri.toString(),
 						action,
 						String.valueOf(System.currentTimeMillis() - REFRESH_INTERVAL)
 				};
-				
+
 				ContentResolver contentResolver = getContentResolver();
-				Cursor cursor = contentResolver.query(operationUri, 
-													null, 
-													selection, 
-													selectionArgs, 
+				Cursor cursor = contentResolver.query(operationUri,
+													null,
+													selection,
+													selectionArgs,
 													null);
 
 				final boolean shouldSkipSync = cursor != null && !cursor.moveToFirst();
