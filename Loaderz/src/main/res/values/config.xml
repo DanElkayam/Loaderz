@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="stackoverflow_url">http://stackoverflow.com/feeds/tag?tagnames=android&amp;sort=newest</string>
+    
+</resources>

@@ -8,6 +8,8 @@
         android:minSdkVersion="15"
         android:targetSdkVersion="17" />
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -18,10 +20,27 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+                android:name="com.zenithed.loaderz.provider.FeedsProvider"
+                android:authorities="com.vegolath.loadersexample.provider"
+                android:exported="false" />
+
+        <service
+                android:name="com.zenithed.loaderz.service.FeedsFechingService"
+                android:exported="false" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.SYNC"/>
+                <data android:mimeType="vnd.android.cursor.item/vnd.feeds.entry"/>
+                <data android:mimeType="vnd.android.cursor.dir/vnd.feeds.entry"/>
+            </intent-filter>
+
+        </service>
+
     </application>
 
 </manifest>
