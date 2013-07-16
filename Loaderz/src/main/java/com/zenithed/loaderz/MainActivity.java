@@ -1,7 +1,5 @@
 package com.zenithed.loaderz;
 
-import java.lang.ref.WeakReference;
-
 import android.app.Activity;
 import android.app.ListFragment;
 import android.app.LoaderManager.LoaderCallbacks;
@@ -43,25 +41,22 @@ public class MainActivity extends Activity {
 			
 			setListAdapter(new SimpleCursorAdapter(
 					getActivity(),
-					android.R.layout.simple_list_item_1,
+                    R.layout.layout_list_item,
 					null,
 					new String[] {FeedsContract.Entry.TITLE },
 					new int [] { android.R.id.text1},
 					CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER));
 			
-			getActivity().getLoaderManager().initLoader(0, null, new ListItemLoaderCallbacks(this));
+			getActivity().getLoaderManager().initLoader(0, null, new ListItemLoaderCallbacks());
 			
 		}
 		
-		private static class ListItemLoaderCallbacks implements LoaderCallbacks<Cursor> {
-			private final WeakReference<ListFragment> fragmet;
+		private class ListItemLoaderCallbacks implements LoaderCallbacks<Cursor> {
 
-			public ListItemLoaderCallbacks(ListFragment fragmentInstance) {
-				fragmet = new WeakReference<ListFragment>(fragmentInstance);
-			}
+
 			@Override
 			public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-				CursorLoader loader = new CursorLoader(fragmet.get().getActivity());
+				CursorLoader loader = new CursorLoader(getActivity());
 				loader.setUri(FeedsContract.Entry.CONTENT_URI);
 				loader.setProjection(new String[] { 
 						FeedsContract.Entry._ID,
@@ -73,7 +68,7 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-				((CursorAdapter)fragmet.get().getListAdapter()).changeCursor(cursor);
+                ((CursorAdapter) getListAdapter()).changeCursor(cursor);
 			}
 			
 			@Override
